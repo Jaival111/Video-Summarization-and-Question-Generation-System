@@ -1,8 +1,11 @@
 1. Extract Audio from Video
     - ffmpeg
+
 2. Transcribe Audio to Text (generate transcript)
-    - Whisper(paid) / Google Cloud Speech-to-Text / AI4Bharat (Indic ASR)
     - for preprocessing --> ffmpeg (Convert audio to 16kHz mono WAV for best results)
+    - Whisper(paid) / Google Cloud Speech-to-Text / AI4Bharat (Indic ASR)
+
 3. Summerise the Transcript
     - Abstractive Summarization (GPT-4, LlaMA-3, BART, T5, PEGASUS)
+
 4. Generate quiz quetions
