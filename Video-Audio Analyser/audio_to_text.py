@@ -1,11 +1,14 @@
 import whisper
 
-def transcribe_audio(input_audio):
+def transcribe_audio_whisper(input_audio):
     model = whisper.load_model("turbo")
     result = model.transcribe(input_audio)
     return result["text"]
 
-text = transcribe_audio("audio.wav")
+def transcribe_audio_indic(input_audio):
+    pass
 
-with open("transcription.txt", "w") as f:
-    f.write(text)
+if __name__ == '__main__':
+    text = transcribe_audio_whisper("audio.wav")
+    with open("transcription.txt", "w") as f:
+        f.write(text)

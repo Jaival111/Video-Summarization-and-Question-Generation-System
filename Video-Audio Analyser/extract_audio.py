@@ -32,5 +32,7 @@ def extract_audio(video_path, output_audio="audio.wav"):
     except subprocess.CalledProcessError as e:
         print("Error extracting audio:", e)
 
-download_youtube_video("https://youtu.be/wHHxkWcqokY?si=t_cCSlqwSr-1v-KZ")
-extract_audio("video.mp4")
+
+if __name__ == '__main__':
+    download_youtube_video("https://youtu.be/MwZwr5Tvyxo?si=Z-_QfI4ZorD9L5ju")
+    extract_audio("video.mp4")
