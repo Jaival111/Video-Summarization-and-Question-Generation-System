@@ -1,6 +1,14 @@
 import subprocess
 import os
+import logging
 import yt_dlp
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[ logging.StreamHandler() ]
+)
+logger = logging.getLogger(__name__)
 
 def download_youtube_video(url, output_path="video.mp4"):
     ydl_opts = {
@@ -10,8 +18,7 @@ def download_youtube_video(url, output_path="video.mp4"):
     }
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
-    print("Video downloaded")
-    return output_path
+    logger.info("Video downloaded successfully.")
 
 def extract_audio(video_path, output_audio="audio.wav"):
     if not os.path.exists(video_path):
@@ -28,9 +35,9 @@ def extract_audio(video_path, output_audio="audio.wav"):
 
     try:
         subprocess.run(command, check=True)
-        print("Audio extracted successfully.")
+        logger.info("Audio extracted successfully.")
     except subprocess.CalledProcessError as e:
-        print("Error extracting audio:", e)
+        logger.error(f"Error extracting audio: {e}")
 
 
 if __name__ == '__main__':
