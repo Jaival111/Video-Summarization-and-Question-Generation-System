@@ -3,6 +3,8 @@ import os
 from extract_audio import download_youtube_video, extract_audio
 from audio_to_text import transcribe_audio_whisper
 from summarize import bart_summary
+from preprocess import save_chunks_to_json
+from generate_quiz import generate_qna_with_references, generate_topic
 
 st.set_page_config(page_title="🎬 YouTube / Video Summarizer", layout="centered")
 st.title("🎥 YouTube / Video Summarizer")
@@ -88,3 +90,6 @@ if st.session_state.video_path and st.button("Generate Transcript and Summary"):
     st.subheader("📃 Summary")
     st.write(summary)
     st.download_button("📥 Download Summary", summary, "summary.txt")
+
+    # save_chunks_to_json(transcript_text)
+

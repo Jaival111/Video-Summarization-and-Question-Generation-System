@@ -5,10 +5,10 @@ from transformers import AutoTokenizer
 # ================================
 # CONFIGURATION
 # ================================
-with open("transcripts/transcript_1.txt", "r", encoding="utf-8") as f:
+with open("transcript.txt", "r", encoding="utf-8") as f:
     INPUT_TEXT = f.read()
 OUTPUT_DIR = "chunks_output"
-CHUNK_SIZE = 50  # number of words per chunk
+CHUNK_SIZE = 50
 OUTPUT_JSON_FILE = "text_chunks.json"
 
 # ================================
