@@ -23,9 +23,9 @@ model = AutoModelForCausalLM.from_pretrained(
 model = prepare_model_for_kbit_training(model)
 
 lora_config = LoraConfig(
-    r=64,  # rank
-    lora_alpha=128,
-    target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "down_proj", "up_proj"],
+    r=8,
+    lora_alpha=16,
+    target_modules=["q_proj", "v_proj"],
     lora_dropout=0.05,
     bias="none",
     task_type="CAUSAL_LM"
@@ -41,7 +41,7 @@ def tokenize_function(example):
     text = f"{example['prompt']}{example['response']}"
     tokenized = tokenizer(
         text,
-        max_length=2048,
+        max_length=512,
         truncation=True,
         padding="max_length"
     )
@@ -58,13 +58,14 @@ training_args = TrainingArguments(
     gradient_accumulation_steps=8,
     warmup_steps=50,
     learning_rate=2e-4,
-    max_steps=1000,
+    max_steps=200,
     fp16=True,
     logging_steps=10,
-    save_steps=200,
+    save_steps=50,
     save_total_limit=2,
     optim="paged_adamw_8bit",
-    report_to="none"
+    report_to="none",
+    gradient_checkpointing=True
 )
 
 data_collator = DataCollatorForLanguageModeling(tokenizer, mlm=False)

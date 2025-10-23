@@ -1,9 +1,11 @@
 import streamlit as st
 import os
+import json
+import pandas as pd
 from extract_audio import download_youtube_video, extract_audio
 from audio_to_text import transcribe_audio_whisper
 from summarize import bart_summary
-from preprocess import save_chunks_to_json
+from preprocess import save_chunks_to_json, chunk_text
 from generate_quiz import generate_qna_with_references, generate_topic
 
 st.set_page_config(page_title="🎬 YouTube / Video Summarizer", layout="centered")
@@ -30,11 +32,31 @@ def cached_transcribe_audio(audio_path: str):
 def cached_generate_summary(text: str):
     return bart_summary(text)
 
+@st.cache_data(show_spinner=False)
+def cached_preprocess_transcript(text: str):
+    """Preprocess transcript into chunks."""
+    chunks = chunk_text(text)
+    return chunks
+
+@st.cache_data(show_spinner=False)
+def cached_generate_quiz(chunks, topic: str):
+    """Generate quiz questions from chunks."""
+    # Convert chunks to DataFrame format expected by generate_quiz
+    df = pd.DataFrame(chunks)
+    questions_data = generate_qna_with_references(df, topic, save_json=True)
+    return questions_data
+
 # ========================
 # 🔹 Initialize session state
 # ========================
 if "video_path" not in st.session_state:
     st.session_state.video_path = None
+if "transcript_text" not in st.session_state:
+    st.session_state.transcript_text = None
+if "chunks" not in st.session_state:
+    st.session_state.chunks = None
+if "questions_data" not in st.session_state:
+    st.session_state.questions_data = None
 
 # ========================
 # 🔹 User Input Section
@@ -69,10 +91,11 @@ if st.session_state.video_path and st.button("Generate Transcript and Summary"):
     audio_path = cached_extract_audio(st.session_state.video_path)
 
     # Step 2: Transcribe
-    progress.progress(60)
+    progress.progress(40)
     st.info("🗣️ Transcribing audio using Whisper... (may take time)")
     transcript_text = cached_transcribe_audio(audio_path)
-    progress.progress(80)
+    st.session_state.transcript_text = transcript_text
+    progress.progress(60)
     st.success("✅ Transcript generated successfully!")
 
     # Show transcript
@@ -80,16 +103,93 @@ if st.session_state.video_path and st.button("Generate Transcript and Summary"):
     st.text_area("Transcript", transcript_text[:3000], height=250)
     st.download_button("📥 Download Transcript", transcript_text, "transcript.txt")
 
-    # Step 3: Summarize
+    # Step 3: Preprocess into chunks
+    progress.progress(70)
+    st.info("🔧 Preprocessing transcript into chunks...")
+    chunks = cached_preprocess_transcript(transcript_text)
+    st.session_state.chunks = chunks
+    progress.progress(80)
+    st.success(f"✅ Preprocessed into {len(chunks)} chunks!")
+
+    # Step 4: Generate topic
+    progress.progress(85)
+    st.info("🎯 Generating topic...")
+    topic = generate_topic(transcript_text)
     progress.progress(90)
+    st.success(f"✅ Topic identified: {topic}")
+
+    # Step 5: Generate quiz questions
+    progress.progress(95)
+    st.info("❓ Generating quiz questions...")
+    questions_data = cached_generate_quiz(chunks, topic)
+    st.session_state.questions_data = questions_data
+    progress.progress(100)
+    st.success(f"✅ Generated {len(questions_data)} question sets!")
+
+    # Step 6: Summarize
     st.info("🧠 Generating summary...")
     summary = cached_generate_summary(transcript_text)
-    progress.progress(100)
     st.success("✅ Summary generated successfully!")
 
     st.subheader("📃 Summary")
     st.write(summary)
     st.download_button("📥 Download Summary", summary, "summary.txt")
 
-    # save_chunks_to_json(transcript_text)
+# ========================
+# 🔹 Display Chunks (Optional)
+# ========================
+if st.session_state.chunks:
+    with st.expander("🔍 View Text Chunks"):
+        st.write("**Text Chunks for Quiz Generation:**")
+        for i, chunk in enumerate(st.session_state.chunks):
+            st.write(f"**Chunk {chunk['chunk_index']}:**")
+            st.write(chunk['chunk_text'][:200] + "..." if len(chunk['chunk_text']) > 200 else chunk['chunk_text'])
+            st.divider()
+
+# ========================
+# 🔹 Display Generated Questions
+# ========================
+if st.session_state.questions_data:
+    st.subheader("❓ Generated Quiz Questions")
+    
+    # Display questions in tabs
+    tab1, tab2 = st.tabs(["📝 Subjective Questions", "🔘 Multiple Choice Questions"])
+    
+    with tab1:
+        st.write("**Subjective Questions:**")
+        for i, question_data in enumerate(st.session_state.questions_data):
+            if question_data["subjective_question"]:
+                st.write(f"**Chunk {question_data['chunk_index']}:** {question_data['subjective_question']}")
+                st.divider()
+    
+    with tab2:
+        st.write("**Multiple Choice Questions:**")
+        for i, question_data in enumerate(st.session_state.questions_data):
+            if question_data["multiple_choice_question"]:
+                st.write(f"**Chunk {question_data['chunk_index']}:** {question_data['multiple_choice_question']}")
+                
+                # Display options
+                for j, option in enumerate(question_data["mcq_options"]):
+                    if j == question_data["correct_answer_index"]:
+                        st.write(f"✅ {option} (Correct)")
+                    else:
+                        st.write(f"   {option}")
+                
+                st.divider()
+    
+    # Download questions as JSON
+    questions_json = json.dumps({
+        "metadata": {
+            "total_chunks": len(st.session_state.questions_data),
+            "total_questions": len(st.session_state.questions_data) * 2
+        },
+        "questions": st.session_state.questions_data
+    }, indent=2)
+    
+    st.download_button(
+        "📥 Download Questions (JSON)", 
+        questions_json, 
+        "generated_questions.json", 
+        mime="application/json"
+    )
 

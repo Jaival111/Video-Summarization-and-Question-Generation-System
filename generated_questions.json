@@ -1,0 +1,443 @@
+{
+    "metadata": {
+        "generated_at": "2025-10-24T00:14:28.727899",
+        "model_used": "meta-llama/Llama-3.1-8B-Instruct",
+        "device": "cuda",
+        "total_chunks": 36,
+        "total_questions": 72
+    },
+    "questions": [
+        {
+            "chunk_index": 1,
+            "subjective_question": "What is a notable characteristic of the Flask framework mentioned in the video?",
+            "multiple_choice_question": "At the time of the recording, what version of the Flask framework was released?",
+            "mcq_options": [
+                "A) 0.9",
+                "B) 1.0",
+                "C) 2.0",
+                "D) 3.0"
+            ],
+            "correct_answer_index": 1
+        },
+        {
+            "chunk_index": 2,
+            "subjective_question": "What is the primary purpose of the application being built in this series of videos?",
+            "multiple_choice_question": "What is one of the types of posts that users can make in the application?",
+            "mcq_options": [
+                "A) Only regular blog posts",
+                "B) Only larger, in-depth articles",
+                "C) Regular blog posts, or smaller like Twitter updates",
+                "D) Only videos"
+            ],
+            "correct_answer_index": 2
+        },
+        {
+            "chunk_index": 3,
+            "subjective_question": "Describe the process a user can follow to reset their password if they have forgotten it.",
+            "multiple_choice_question": "What is one of the new options available to a user after logging in to the application?",
+            "mcq_options": [
+                "A) Update their email address",
+                "B) Update their password",
+                "C) Update their profile picture",
+                "D) Delete their account"
+            ],
+            "correct_answer_index": 2
+        },
+        {
+            "chunk_index": 4,
+            "subjective_question": "What are some key features of the blog application setup being described, as related to user interaction with posts?",
+            "multiple_choice_question": "What happens to the picture when a new post is created in the blog application?",
+            "mcq_options": [
+                "A) It gets deleted.",
+                "B) It gets resized and saved to the server.",
+                "C) It gets updated.",
+                "D) It gets ignored."
+            ],
+            "correct_answer_index": 1
+        },
+        {
+            "chunk_index": 5,
+            "subjective_question": "What are some of the key aspects of building a web application that the instructor mentions as a benefit of building a blog application with Flask?",
+            "multiple_choice_question": "What can be learned by building a blog application with Flask?",
+            "mcq_options": [
+                "A) Only how to delete posts",
+                "B) How to deal with databases, user input, file systems, and email sending",
+                "C) How to build a simple chatbot",
+                "D) How to create a game"
+            ],
+            "correct_answer_index": 1
+        },
+        {
+            "chunk_index": 6,
+            "subjective_question": "What is the purpose of the links provided in the description section of the video series?",
+            "multiple_choice_question": "Where can viewers find the source code of each video in the process?",
+            "mcq_options": [
+                "A) In the comments section",
+                "B) In the description section below the video",
+                "C) On the website's homepage",
+                "D) On the project's GitHub repository"
+            ],
+            "correct_answer_index": 1
+        },
+        {
+            "chunk_index": 7,
+            "subjective_question": "What is a good practice when installing packages for a new project, as mentioned in the provided text?",
+            "multiple_choice_question": "How should you install packages for a new project?",
+            "mcq_options": [
+                "A) In the default Python environment only.",
+                "B) In a virtual environment, but only for small projects.",
+                "C) In a virtual environment, to keep different projects separate.",
+                "D) It doesn't matter, packages can be installed anywhere."
+            ],
+            "correct_answer_index": 2
+        },
+        {
+            "chunk_index": 8,
+            "subjective_question": "What is the approach taken by the educator when starting the series of videos on building a blog application with Flask?",
+            "multiple_choice_question": "What is the command used to install Flask?",
+            "mcq_options": [
+                "A) pip install Flask",
+                "B) pip uninstall Flask",
+                "C) pip list Flask",
+                "D) pip update Flask"
+            ],
+            "correct_answer_index": 0
+        },
+        {
+            "chunk_index": 9,
+            "subjective_question": "Describe the step you would take to verify that Flask has been installed correctly in the Python interpreter.",
+            "multiple_choice_question": "Where would you typically create a new project from scratch when following the tutorial on Building a Blog Application with Flask: Features and Setup?",
+            "mcq_options": [
+                "A) In the Python interpreter",
+                "B) In a text editor",
+                "C) On the desktop",
+                "D) In a virtual environment"
+            ],
+            "correct_answer_index": 2
+        },
+        {
+            "chunk_index": 10,
+            "subjective_question": "Describe the command used to create a new directory on a Mac, and explain why it is different from the command used on a Windows machine.",
+            "multiple_choice_question": "How does the educator create a new project directory in their text editor?",
+            "mcq_options": [
+                "A) By using the command \"mkdir\" in the terminal",
+                "B) By navigating to the desktop and creating a new folder",
+                "C) By opening up Sublime Text and selecting \"file\" > \"open\"",
+                "D) By using the command \"cd\" in the terminal"
+            ],
+            "correct_answer_index": 2
+        },
+        {
+            "chunk_index": 11,
+            "subjective_question": "What is the name of the new file that the instructor creates within the project directory to start a basic Flask application?",
+            "multiple_choice_question": "What is the purpose of copying and pasting the code from the Flask website documentation into the newly created file?",
+            "mcq_options": [
+                "A) To create a new project directory",
+                "B) To start a new Flask application",
+                "C) To view the documentation for the Flask website",
+                "D) To add features to the application"
+            ],
+            "correct_answer_index": 1
+        },
+        {
+            "chunk_index": 12,
+            "subjective_question": "What is the purpose of the line `from flask import flask` in the code snippet?",
+            "multiple_choice_question": "What is the reason for passing `__name__` as an argument when creating an instance of the `flask` class?",
+            "mcq_options": [
+                "A) To specify the name of the application",
+                "B) To import the `flask` class",
+                "C) To pass the name of the module",
+                "D) To create a new instance of the `flask` class"
+            ],
+            "correct_answer_index": 2
+        },
+        {
+            "chunk_index": 13,
+            "subjective_question": "What is the purpose of using a double underscore name in the context of the script when running it directly with Python?",
+            "multiple_choice_question": "What is the function of the double underscore name in the script?",
+            "mcq_options": [
+                "A) To create a new instance of the Flask application",
+                "B) To specify the location of templates and static files",
+                "C) To run the script with Python",
+                "D) To define routes for the application"
+            ],
+            "correct_answer_index": 1
+        },
+        {
+            "chunk_index": 14,
+            "subjective_question": "What is the recommended approach for learning about decorators in the context of building a Flask application, according to the text?",
+            "multiple_choice_question": "What is the primary purpose of decorators in Flask, as described in the text?",
+            "mcq_options": [
+                "A) To create new functions from existing ones.",
+                "B) To add additional functionality to existing functions.",
+                "C) To replace existing functions with new ones.",
+                "D) To delete existing functions."
+            ],
+            "correct_answer_index": 1
+        },
+        {
+            "chunk_index": 15,
+            "subjective_question": "Describe the purpose of the app dot route decorator in the context of building a blog application with Flask.",
+            "multiple_choice_question": "What is the function of the forward slash in the code snippet provided?",
+            "mcq_options": [
+                "A) It represents a database connection.",
+                "B) It defines a new route for the website.",
+                "C) It is a placeholder for a variable in the URL.",
+                "D) It is a comment in the code."
+            ],
+            "correct_answer_index": 1
+        },
+        {
+            "chunk_index": 16,
+            "subjective_question": "What is the initial text that should be displayed when navigating to the homepage of the application?",
+            "multiple_choice_question": "What command is used to navigate to the project directory in both Windows and Unix-based systems?",
+            "mcq_options": [
+                "A) CD",
+                "B) MD",
+                "C) LS",
+                "D) CP"
+            ],
+            "correct_answer_index": 0
+        },
+        {
+            "chunk_index": 17,
+            "subjective_question": "Describe the command used to set an environment variable to the file that is to be the Flask application on a Mac or Linux system.",
+            "multiple_choice_question": "What is the alternative command used to set an environment variable on a Windows system?",
+            "mcq_options": [
+                "A) export flask_app = flask_blog.py",
+                "B) set flask_app = flask_blog.py",
+                "C) export flask_app = flask_blog_pi",
+                "D) set flask_app = flask_blog_pi"
+            ],
+            "correct_answer_index": 1
+        },
+        {
+            "chunk_index": 18,
+            "subjective_question": "Describe the IP address that your Flask app is being served on, according to the given text.",
+            "multiple_choice_question": "What is required to be able to view your Flask site?",
+            "mcq_options": [
+                "A) A separate server software",
+                "B) A different port number",
+                "C) The web server to be running",
+                "D) A different IP address"
+            ],
+            "correct_answer_index": 2
+        },
+        {
+            "chunk_index": 19,
+            "subjective_question": "What is the purpose of using the local host alias instead of the IP address 127.0.0.1 in the context of the given example?",
+            "multiple_choice_question": "Why is the text \"Hello World\" displayed in the web browser when the sample application is accessed?",
+            "mcq_options": [
+                "A) Because it is the default text displayed by the browser.",
+                "B) Because the home route returns this text as a result.",
+                "C) Because the application is not properly configured.",
+                "D) Because the browser is not able to connect to the server."
+            ],
+            "correct_answer_index": 1
+        },
+        {
+            "chunk_index": 20,
+            "subjective_question": "What is the purpose of wrapping the text in h1 tags in the context of building a blog application with Flask?",
+            "multiple_choice_question": "What happens when you replace 127 dot zero dot zero dot one with local host in the URL and hit enter?",
+            "mcq_options": [
+                "A) The route is changed to a different URL",
+                "B) The results of the route are updated to show a different page",
+                "C) The route returns the same results",
+                "D) The application crashes"
+            ],
+            "correct_answer_index": 2
+        },
+        {
+            "chunk_index": 21,
+            "subjective_question": "What is the purpose of wrapping the output in HTML heading one tags in the given code snippet?",
+            "multiple_choice_question": "Why did the changes made to the code not take effect when the browser was reloaded?",
+            "mcq_options": [
+                "A) The code was not saved properly.",
+                "B) The web server was not stopped and restarted.",
+                "C) The browser was not updated with the latest version of the code.",
+                "D) The changes were not made in the correct location."
+            ],
+            "correct_answer_index": 1
+        },
+        {
+            "chunk_index": 22,
+            "subjective_question": "What is a common action you would take when developing a site using the information from the provided text?",
+            "multiple_choice_question": "What is one way to view the source code of an HTML page in a browser?",
+            "mcq_options": [
+                "A) By clicking on the \"Inspect\" button",
+                "B) By right clicking and going to \"View Page Source\"",
+                "C) By copying and pasting the URL into a code editor",
+                "D) By using a third-party plugin"
+            ],
+            "correct_answer_index": 1
+        },
+        {
+            "chunk_index": 23,
+            "subjective_question": "Describe a scenario where having to shut down and restart the web server for every small change in the application would be inconvenient. (Answer should be around 50-75 words)",
+            "multiple_choice_question": "What is the purpose of setting the environment variable \"flask_debug\" in the context of running a Flask application?",
+            "mcq_options": [
+                "A) To enable caching for faster page loads",
+                "B) To set up a database connection",
+                "C) To run the application in debug mode without restarting",
+                "D) To configure email notifications"
+            ],
+            "correct_answer_index": 2
+        },
+        {
+            "chunk_index": 24,
+            "subjective_question": "Describe the command used to set an environment variable on Windows in the context of the provided text.",
+            "multiple_choice_question": "What is the result of using the \"set\" command in the context of the provided text?",
+            "mcq_options": [
+                "A) It sets a new environment variable.",
+                "B) It exports an environment variable.",
+                "C) It runs the Flask application.",
+                "D) It refreshes the browser."
+            ],
+            "correct_answer_index": 0
+        },
+        {
+            "chunk_index": 25,
+            "subjective_question": "Describe the benefits of running a Flask application in debug mode, as demonstrated in the given text.",
+            "multiple_choice_question": "What is the purpose of reloading the browser while in debug mode, as shown in the example?",
+            "mcq_options": [
+                "A) To restart the web server",
+                "B) To update the environment variables",
+                "C) To see the changes made to the application without restarting the web server",
+                "D) To switch to a different programming language"
+            ],
+            "correct_answer_index": 2
+        },
+        {
+            "chunk_index": 26,
+            "subjective_question": "Describe the purpose of the conditional statement that is added to the bottom of the file in the context of building a blog application with Flask.",
+            "multiple_choice_question": "What is the purpose of the conditional statement that checks if the value of `__name__` is equal to `\"__main__\"` in the code snippet provided?",
+            "mcq_options": [
+                "A) To check if the application is running in debug mode",
+                "B) To check if the application is running in production mode",
+                "C) To run the application in debug mode when the value of `__name__` is equal to `\"__main__\"`",
+                "D) To exit the application when the value of `__name__` is equal to `\"__main__\"`"
+            ],
+            "correct_answer_index": 2
+        },
+        {
+            "chunk_index": 27,
+            "subjective_question": "What is the condition that determines whether the name of the double underscore variable is'main' or the name of the module when running a Python script?",
+            "multiple_choice_question": "What happens to the name of the double underscore variable when the script is imported into another module?",
+            "mcq_options": [
+                "A) It remains'main'",
+                "B) It changes to the name of the module",
+                "C) It is undefined",
+                "D) It is set to a random value"
+            ],
+            "correct_answer_index": 1
+        },
+        {
+            "chunk_index": 28,
+            "subjective_question": "What are the two ways to run the script in the provided example, and what is the key difference between them?",
+            "multiple_choice_question": "What happens when the script is run directly with Python by saying \"Python and then flask blog dot pi\"?",
+            "mcq_options": [
+                "A) The script is run in a new environment.",
+                "B) The script is run with debug mode enabled.",
+                "C) The script is run with environment variables.",
+                "D) The script is run on a remote server."
+            ],
+            "correct_answer_index": 1
+        },
+        {
+            "chunk_index": 29,
+            "subjective_question": "What are the two ways to run a Flask application mentioned in the text, and how do they differ in terms of convenience?",
+            "multiple_choice_question": "Why has the author of the tutorial started using the `flask run` command instead of running the module directly?",
+            "mcq_options": [
+                "A) Because it is a new feature of Flask that allows for easier debugging.",
+                "B) Because it is more convenient for setting environment variables.",
+                "C) Because the documentation now recommends it.",
+                "D) Because it is a more secure way to run the application."
+            ],
+            "correct_answer_index": 2
+        },
+        {
+            "chunk_index": 30,
+            "subjective_question": "Describe the purpose of adding an about route to the existing Flask application.",
+            "multiple_choice_question": "What was the response returned by the server when trying to navigate to the about page before adding the about route?",
+            "mcq_options": [
+                "A) 200 OK",
+                "B) 404 Not Found",
+                "C) 500 Internal Server Error",
+                "D) 301 Moved Permanently"
+            ],
+            "correct_answer_index": 1
+        },
+        {
+            "chunk_index": 31,
+            "subjective_question": "What is the purpose of creating a new route in the context of building a blog application with Flask?",
+            "multiple_choice_question": "What change is necessary when creating a new route in the Flask application?",
+            "mcq_options": [
+                "A) Change the route path but keep the function name the same.",
+                "B) Change the function name but keep the route path the same.",
+                "C) Change both the route path and function name.",
+                "D) No change is necessary."
+            ],
+            "correct_answer_index": 1
+        },
+        {
+            "chunk_index": 32,
+            "subjective_question": "Describe the change made to the route in the code to resolve the 404 not found error.",
+            "multiple_choice_question": "What was the purpose of the new route created in the code?",
+            "mcq_options": [
+                "A) To handle user authentication",
+                "B) To serve static files",
+                "C) To return the information for the about page",
+                "D) To handle form submissions"
+            ],
+            "correct_answer_index": 2
+        },
+        {
+            "chunk_index": 33,
+            "subjective_question": "Describe the purpose of using multiple decorators in Flask to handle multiple routes with the same function.",
+            "multiple_choice_question": "What is the purpose of using multiple decorators in the provided example?",
+            "mcq_options": [
+                "A) To handle multiple routes with different functions.",
+                "B) To handle multiple routes with the same function.",
+                "C) To handle multiple functions with the same route.",
+                "D) To handle multiple routes with different HTTP methods."
+            ],
+            "correct_answer_index": 1
+        },
+        {
+            "chunk_index": 34,
+            "subjective_question": "What is the effect of changing the function name from \"hello\" to \"home\" in the code snippet described in the text?",
+            "multiple_choice_question": "What is the outcome of adding a new route \"/home\" to the Flask application described in the text?",
+            "mcq_options": [
+                "A) The \"/home\" route will override the existing \"/home\" route.",
+                "B) The \"/home\" route will be handled by a new function.",
+                "C) The \"/home\" route will be handled by the same function as the existing route.",
+                "D) The \"/home\" route will not be recognized by the Flask application."
+            ],
+            "correct_answer_index": 2
+        },
+        {
+            "chunk_index": 35,
+            "subjective_question": "What is the next step in the tutorial series after learning how to create basic routes in a Flask application?",
+            "multiple_choice_question": "What will be covered in the next video of the tutorial series?",
+            "mcq_options": [
+                "A) How to handle user authentication in Flask",
+                "B) How to return some more complicated HTML code using templates",
+                "C) How to integrate a database with Flask",
+                "D) How to deploy a Flask application to a production environment"
+            ],
+            "correct_answer_index": 1
+        },
+        {
+            "chunk_index": 36,
+            "subjective_question": "What is one way viewers can contribute to the content creator's work if they have the means?",
+            "multiple_choice_question": "How can viewers help share the videos with others?",
+            "mcq_options": [
+                "A) By commenting on the videos",
+                "B) By sharing the link on social media",
+                "C) By subscribing to the channel",
+                "D) By contributing through Patreon"
+            ],
+            "correct_answer_index": 1
+        }
+    ]
+}

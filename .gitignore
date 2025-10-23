@@ -12,3 +12,6 @@ chunks_output/
 Llama-3.1-8B/
 
 transcripts/
+
+llama3-qlora-qna/  
+llama3-qna-qlora-adapter/

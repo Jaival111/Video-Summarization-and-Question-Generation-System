@@ -33,13 +33,17 @@ Ensure that the subjective and multiple-choice questions are **different** from 
 """
 
     # Combine the generated outputs
-    output = f"""### Subjective Questions:
-1. {q['subjective_question']}
+    # Combine the generated outputs
+    options_text = "\n   ".join(q['mcq_options'])
+    output = (
+        f"### Subjective Questions:\n"
+        f"1. {q['subjective_question']}\n\n"
+        f"### Multiple Choice Questions:\n"
+        f"1. {q['multiple_choice_question']}\n"
+        f"   {options_text}\n"
+        f"   Correct Answer: {q['mcq_options'][q['correct_answer_index']]}"
+    )
 
-### Multiple Choice Questions:
-1. {q['multiple_choice_question']}
-   {'\n   '.join(q['mcq_options'])}
-   Correct Answer: {q['mcq_options'][q['correct_answer_index']]}"""
 
     train_data.append({"prompt": prompt, "response": output})
 
