@@ -1,47 +1,55 @@
-from sumy.parsers.plaintext import PlaintextParser
-from sumy.nlp.tokenizers import Tokenizer
-from sumy.summarizers.lex_rank import LexRankSummarizer
-from transformers import BartForConditionalGeneration, BartTokenizer
-import logging
+from transformers import pipeline
+import textwrap
+import os
+from preprocess import chunk_text
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[ logging.StreamHandler() ]
-)
-logger = logging.getLogger(__name__)
+def summarize_text(text, model_name="facebook/bart-large-cnn", output_file="summary.txt"):
+    """Generate a coherent summary for the whole text."""
+    summarizer = pipeline("summarization", model=model_name, device_map="auto")
 
-def lexrank_summary(text, num_sentences=5):
-    parser = PlaintextParser.from_string(text, Tokenizer("english"))
-    summarizer = LexRankSummarizer()
-    summary = summarizer(parser.document, num_sentences)
-    logger.info("Extractive summary completed successfully.")
-    return " ".join([str(sentence) for sentence in summary])
+    # Step 1: Split the text
+    chunks = chunk_text(text)
+    print(f"🔹 Total chunks created: {len(chunks)}")
 
-def bart_summary(text, max_length=500):
-    model_name = "facebook/bart-large-cnn"
-    tokenizer = BartTokenizer.from_pretrained(model_name)
-    model = BartForConditionalGeneration.from_pretrained(model_name)
+    # Step 2: Summarize each chunk
+    summaries = []
+    for i, chunk in enumerate(chunks, 1):
+        print(f"Summarizing chunk {i}/{len(chunks)}...")
+        # Handle both string and dictionary formats
+        if isinstance(chunk, dict):
+            chunk_content = chunk.get("chunk_text", "")
+        else:
+            chunk_content = chunk
 
-    inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=1024)
+        summary = summarizer(chunk_content, max_length=30, min_length=10, do_sample=False)[0]["summary_text"]
+        summaries.append(summary)
 
-    summary_ids = model.generate(
-        inputs["input_ids"],
-        num_beams=4,
-        length_penalty=2.0,
-        max_length=max_length,
-        min_length=100,
-        no_repeat_ngram_size=3
-    )
+    # Step 3: Combine summaries and re-summarize to get a clean final summary
+    combined_summary = " ".join(summaries)
+    # final_summary = summarizer(combined_summary, max_length=300, min_length=120, do_sample=False)[0]["summary_text"]
+    
+    # Write summary to file
+    with open(output_file, 'w', encoding='utf-8') as f:
+        f.write(combined_summary)
+    
+    print(f"Summary saved to: {output_file}")
+    return combined_summary, output_file
 
-    logger.info("Abstractive summary completed successfully.")
-    return tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+def bart_summary(text):
+    """Wrapper function for backward compatibility with main.py"""
+    summary, _ = summarize_text(text)
+    return summary
 
 
-if __name__ == '__main__':
-    with open("transcription.txt", "r") as f:
+if __name__ == "__main__":
+    # Path to your transcript
+    transcript_path = "transcript.txt"
+
+    with open(transcript_path, "r", encoding="utf-8") as f:
         transcript = f.read()
-    summary = lexrank_summary(transcript, num_sentences=5)
-    # summary = bart_summary(transcript)
-    with open("summary.txt", "w", encoding="utf-8") as f:
-        f.write(summary)
+
+    print("Generating summary...")
+    final_summary, summary_file = summarize_text(transcript)
+
+    print(f"\n✅ Summary saved to '{summary_file}'\n")
+    print(textwrap.fill(final_summary, width=100))
