@@ -15,3 +15,7 @@ transcripts/
 
 llama3-qlora-qna/  
 llama3-qna-qlora-adapter/
+
+__pycache__/
+
+*.png
