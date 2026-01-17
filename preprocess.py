@@ -1,73 +1,61 @@
 import os
 import json
 from transformers import AutoTokenizer
+import nltk
+nltk.download("punkt")
+from nltk.tokenize import sent_tokenize
 
-# ================================
-# CONFIGURATION
-# ================================
 with open("transcript.txt", "r", encoding="utf-8") as f:
     INPUT_TEXT = f.read()
 OUTPUT_DIR = "chunks_output"
 CHUNK_SIZE = 50
 OUTPUT_JSON_FILE = "text_chunks.json"
 
-# ================================
-# HELPER FUNCTION TO SPLIT TEXT
-# ================================
 def chunk_text(
     text,
-    tokenizer=None,
-    max_tokens=128
+    tokenizer_name="facebook/bart-large-cnn",
+    max_tokens=900,   # leave buffer for BART
+    overlap_tokens=100
 ):
-    """Split text into chunks that respect sentence boundaries and token limits."""
-    if tokenizer is None:
-        tokenizer = AutoTokenizer.from_pretrained(
-            "meta-llama/Llama-3.1-8B-Instruct",
-            use_fast=True
-        )
+    tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
 
-    # Split by sentence (naively by '. ') — you can improve using nltk or spacy
-    sentences = text.split('. ')
+    sentences = sent_tokenize(text)
     chunks = []
-    current_chunk = ""
+    current_chunk = []
     current_tokens = 0
 
     for sentence in sentences:
-        # Ensure sentence ends with a period
-        if not sentence.endswith('.'):
-            sentence += '.'
-
-        # Tokenize the sentence
-        sentence_tokens = tokenizer.encode(sentence, add_special_tokens=False)
+        sentence_tokens = tokenizer.encode(
+            sentence,
+            add_special_tokens=False
+        )
         n_tokens = len(sentence_tokens)
 
-        # If adding this sentence exceeds limit, save current chunk
-        if current_tokens + n_tokens > max_tokens:
-            if current_chunk.strip():
-                chunks.append({
-                    "chunk_index": len(chunks) + 1,
-                    "chunk_text": current_chunk.strip()
-                })
-            # start a new chunk with the current sentence
-            current_chunk = sentence + " "
-            current_tokens = n_tokens
-        else:
-            current_chunk += sentence + " "
-            current_tokens += n_tokens
+        # Handle very long sentences
+        if n_tokens > max_tokens:
+            sentence_tokens = sentence_tokens[:max_tokens]
+            sentence = tokenizer.decode(sentence_tokens)
 
-    # Add the last chunk
-    if current_chunk.strip():
-        chunks.append({
-            "chunk_index": len(chunks) + 1,
-            "chunk_text": current_chunk.strip()
-        })
+        if current_tokens + n_tokens > max_tokens:
+            chunk_text = " ".join(current_chunk)
+            chunks.append(chunk_text)
+
+            # overlap
+            overlap = tokenizer.encode(
+                chunk_text,
+                add_special_tokens=False
+            )[-overlap_tokens:]
+            current_chunk = [tokenizer.decode(overlap)]
+            current_tokens = len(overlap)
+
+        current_chunk.append(sentence)
+        current_tokens += n_tokens
+
+    if current_chunk:
+        chunks.append(" ".join(current_chunk))
 
     return chunks
 
-
-# ================================
-# MAIN FUNCTION
-# ================================
 def save_chunks_to_json(text, output_dir=OUTPUT_DIR, output_file=OUTPUT_JSON_FILE, chunk_size=CHUNK_SIZE):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
@@ -80,8 +68,5 @@ def save_chunks_to_json(text, output_dir=OUTPUT_DIR, output_file=OUTPUT_JSON_FIL
     
     print(f"Saved {len(chunks)} chunks to {output_path}")
 
-# ================================
-# RUN SCRIPT
-# ================================
 if __name__ == "__main__":
     save_chunks_to_json(INPUT_TEXT)

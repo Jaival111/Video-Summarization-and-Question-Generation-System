@@ -1,7 +1,9 @@
-from transformers import pipeline
-import textwrap
 import os
+from transformers import pipeline
 from preprocess import chunk_text
+import torch
+import json
+
 
 def summarize_text(text, model_name="facebook/bart-large-cnn", output_file="summary.txt"):
     """Generate a coherent summary for the whole text."""
@@ -10,6 +12,12 @@ def summarize_text(text, model_name="facebook/bart-large-cnn", output_file="summ
     # Step 1: Split the text
     chunks = chunk_text(text)
     print(f"🔹 Total chunks created: {len(chunks)}")
+
+    output_path = os.path.join("chunks.json")
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(chunks, f, indent=4, ensure_ascii=False)
+    
+    print(f"Saved {len(chunks)} chunks to {output_path}")
 
     # Step 2: Summarize each chunk
     summaries = []
@@ -33,7 +41,7 @@ def summarize_text(text, model_name="facebook/bart-large-cnn", output_file="summ
         f.write(combined_summary)
     
     print(f"Summary saved to: {output_file}")
-    return combined_summary, output_file
+    return output_file
 
 def bart_summary(text):
     """Wrapper function for backward compatibility with main.py"""
@@ -49,7 +57,6 @@ if __name__ == "__main__":
         transcript = f.read()
 
     print("Generating summary...")
-    final_summary, summary_file = summarize_text(transcript)
+    summary_file = summarize_text(transcript)
 
     print(f"\n✅ Summary saved to '{summary_file}'\n")
-    print(textwrap.fill(final_summary, width=100))

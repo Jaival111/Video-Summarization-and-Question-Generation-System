@@ -2,20 +2,16 @@ transcript.txt
 summary.txt
 *.wav
 *.mp4
+*.json
+*.jsonl
+*.zip
 test.py
-quiz_test.py
 
 env/
+lora-mcq-llama3/
+lora-mcq-llama3-new/
 
-chunks_output/
-
-Llama-3.1-8B/
-
-transcripts/
-
-llama3-qlora-qna/  
-llama3-qna-qlora-adapter/
-
+__pycache__
 __pycache__/
 
 *.png

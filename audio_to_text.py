@@ -1,6 +1,5 @@
 import whisper
 import logging
-import os
 
 logging.basicConfig(
     level=logging.INFO,
@@ -21,9 +20,8 @@ def transcribe_audio_whisper(input_audio, output_file="transcript.txt"):
         f.write(text)
     
     logger.info(f"Transcript saved to: {output_file}")
-    return text, output_file
+    return output_file
 
 if __name__ == '__main__':
-    text, transcript_file = transcribe_audio_whisper("audio.wav")
+    transcript_file = transcribe_audio_whisper("audio.wav")
     print(f"Transcript saved to: {transcript_file}")
-    print(f"Text preview: {text[:200]}...")
